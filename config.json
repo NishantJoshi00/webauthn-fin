@@ -1,0 +1,7 @@
+{
+  "PORT": 8000,
+  "NODE_ENV": "development",
+  "TLS_PORT": 8443,
+  "SESSION_SECRET": "secret123",
+  "ALLOW_REGISTER": true
+}

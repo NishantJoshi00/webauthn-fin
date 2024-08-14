@@ -1,0 +1,11 @@
+node_modules/
+build/
+logs/
+*.key
+*.crt
+.env
+user.json
+cred.json
+*.service
+
+src/app/.notes
