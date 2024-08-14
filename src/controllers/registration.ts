@@ -15,6 +15,16 @@ export const handleRegisterStart = async (
   res: Response,
   next: NextFunction,
 ) => {
+  let rpId;
+
+  let origin = req.get("origin");
+
+  if (origin && origin.includes("localhost")) {
+    rpId = "localhost";
+  } else {
+    rpId = rpID;
+  }
+
   const { username } = req.body;
 
   if (!username) {
@@ -33,7 +43,7 @@ export const handleRegisterStart = async (
 
     const options = await generateRegistrationOptions({
       rpName,
-      rpID,
+      rpID: rpId,
       userID: user.id,
       userName: user.username,
       timeout: 60000,
