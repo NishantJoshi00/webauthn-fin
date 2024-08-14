@@ -9,3 +9,4 @@ cred.json
 *.service
 
 src/app/.notes
+.vercel

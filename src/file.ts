@@ -19,52 +19,52 @@ type Credential = {
 };
 
 async function getUserById(userId: string): Promise<User | undefined> {
-  const user = await fs.readFile(user_filename, "utf-8");
-  const users: User[] = JSON.parse(user);
+  const users: User[] = [];
   return users.find((user) => user.id === userId);
 }
 
 async function getUserByUsername(username: string): Promise<User | undefined> {
-  const user = await fs.readFile(user_filename, "utf-8");
-  const users: User[] = JSON.parse(user);
+  const users: User[] = [];
   return users.find((user) => user.username === username);
 }
 
 async function createUser(username: string): Promise<User> {
-  const user = await fs.readFile(user_filename, "utf-8");
-  const users: User[] = JSON.parse(user);
+  const users: User[] = [];
   const newUser: User = {
     id: uuid4(),
     username,
   };
   users.push(newUser);
-  await fs.writeFile(user_filename, JSON.stringify(users, null, 2));
+  // await fs.writeFile(user_filename, JSON.stringify(users, null, 2));
   return newUser;
 }
 
 async function createCredentials(data: Credential): Promise<Credential> {
-  const cred = await fs.readFile(cred_filename, "utf-8");
-  const creds: Credential[] = JSON.parse(cred);
+  // const cred = await fs.readFile(cred_filename, "utf-8");
+  // const creds: Credential[] = JSON.parse(cred);
+  const creds: Credential[] = []
   creds.push(data);
-  await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
+  // await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
   return data;
 }
 
 async function getCredentialByCredentialId(
   credentialId: string,
 ): Promise<Credential | undefined> {
-  const cred = await fs.readFile(cred_filename, "utf-8");
-  const creds: Credential[] = JSON.parse(cred);
+  const creds: Credential[] = [];
+  // const cred = await fs.readFile(cred_filename, "utf-8");
+  // const creds: Credential[] = JSON.parse(cred);
   return creds.find((cred) => cred.credential_id === credentialId);
 }
 
 async function updateCredentialCounter(credentialId: string, newCounter: number): Promise<Credential | undefined> {
-  const cred = await fs.readFile(cred_filename, "utf-8");
-  const creds: Credential[] = JSON.parse(cred);
+  const creds: Credential[] = [];
+  // const cred = await fs.readFile(cred_filename, "utf-8");
+  // const creds: Credential[] = JSON.parse(cred);
   const index = creds.findIndex((cred) => cred.credential_id === credentialId);
   if (index === -1) return;
   creds[index].counter = newCounter;
-  await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
+  // await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
   return creds[index];
 }
 
