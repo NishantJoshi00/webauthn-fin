@@ -17,13 +17,14 @@ export const handleRegisterStart = async (
 ) => {
   let rpId;
 
-  let origin = req.get("origin");
 
-  if (origin && origin.includes("localhost")) {
+  if (req.get("origin") && req.get("origin")?.includes("localhost")) {
     rpId = "localhost";
   } else {
     rpId = rpID;
   }
+
+  console.log(rpId);
 
   const { username } = req.body;
 
@@ -77,6 +78,17 @@ export const handleRegisterFinish = async (
   const { body } = req;
   const { currentChallenge, loggedInUserId } = req.session;
 
+
+  let rpId;
+
+  if (req.get("origin") && req.get("origin")?.includes("localhost")) {
+    rpId = "localhost";
+  } else {
+    rpId = rpID;
+  }
+
+  console.log(rpId);
+
   if (!loggedInUserId) {
     return next(new CustomError("User ID is missing", 400));
   }
@@ -86,11 +98,14 @@ export const handleRegisterFinish = async (
   }
 
   try {
+    console.log(body);
+    console.log(currentChallenge);
+
     const verification = await verifyRegistrationResponse({
       response: body as RegistrationResponseJSON,
       expectedChallenge: currentChallenge,
       expectedOrigin: origin,
-      expectedRPID: rpID,
+      expectedRPID: rpId,
       requireUserVerification: true,
     });
 

@@ -9,6 +9,9 @@ import {
   handleLoginStart,
   handleLoginFinish,
 } from "../controllers/authentication";
+import { clearCredentials, clearUsers } from "../file";
+
+
 
 const router = express.Router();
 
@@ -25,6 +28,20 @@ router.post("/logout", (req, res) => {
   req.session.loggedInUserId = undefined;
   res.status(200).json({ message: "Logged out" });
 });
+
+router.post("/nuke", async (req, res) => {
+  const API_KEY = req.headers["x-api-key"];
+
+  const assetApiKey = process.env.API_KEY || "test_admin";
+
+  if (API_KEY !== assetApiKey) {
+    return res.status(403).json({ message: "Unauthorized" });
+  }
+
+  await clearUsers();
+  await clearCredentials();
+
+})
 
 router.use(handleError);
 

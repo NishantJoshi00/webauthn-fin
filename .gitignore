@@ -4,8 +4,6 @@ logs/
 *.key
 *.crt
 .env
-user.json
-cred.json
 *.service
 
 src/app/.notes

@@ -19,41 +19,75 @@ type Credential = {
 };
 
 async function getUserById(userId: string): Promise<User | undefined> {
-  const users: User[] = [];
+  let users: User[];
+  try {
+    const user = await fs.readFile(user_filename, "utf-8");
+    users = JSON.parse(user);
+  } catch {
+    users = [];
+  }
   return users.find((user) => user.id === userId);
 }
 
 async function getUserByUsername(username: string): Promise<User | undefined> {
-  const users: User[] = [];
+  let users: User[];
+  try {
+    const user = await fs.readFile(user_filename, "utf-8");
+    users = JSON.parse(user);
+  } catch {
+    users = [];
+  }
   return users.find((user) => user.username === username);
 }
 
 async function createUser(username: string): Promise<User> {
-  const users: User[] = [];
+  let users: User[];
+  try {
+    const user = await fs.readFile(user_filename, "utf-8");
+    users = JSON.parse(user);
+  } catch {
+    users = [];
+  }
   const newUser: User = {
     id: uuid4(),
     username,
   };
+
   users.push(newUser);
-  // await fs.writeFile(user_filename, JSON.stringify(users, null, 2));
+
+  try {
+    await fs.writeFile(user_filename, JSON.stringify(users, null, 2));
+  } catch { }
+
   return newUser;
 }
 
 async function createCredentials(data: Credential): Promise<Credential> {
-  // const cred = await fs.readFile(cred_filename, "utf-8");
-  // const creds: Credential[] = JSON.parse(cred);
-  const creds: Credential[] = []
+  let creds: Credential[];
+  try {
+    const cred = await fs.readFile(cred_filename, "utf-8");
+    creds = JSON.parse(cred);
+  } catch {
+    creds = []
+  }
   creds.push(data);
-  // await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
+  try {
+    await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
+  } catch { }
+
   return data;
 }
 
 async function getCredentialByCredentialId(
   credentialId: string,
 ): Promise<Credential | undefined> {
-  const creds: Credential[] = [];
-  // const cred = await fs.readFile(cred_filename, "utf-8");
-  // const creds: Credential[] = JSON.parse(cred);
+  let creds: Credential[];
+  try {
+    const cred = await fs.readFile(cred_filename, "utf-8");
+    creds = JSON.parse(cred);
+  } catch {
+    creds = []
+  }
   return creds.find((cred) => cred.credential_id === credentialId);
 }
 
@@ -68,6 +102,20 @@ async function updateCredentialCounter(credentialId: string, newCounter: number)
   return creds[index];
 }
 
+async function clearUsers(): Promise<void> {
+  try {
+    await fs.writeFile(user_filename, "[]");
+  } catch {
+  }
+}
+
+async function clearCredentials(): Promise<void> {
+  try {
+    await fs.writeFile(cred_filename, "[]");
+  } catch {
+  }
+}
+
 export {
   getUserById,
   getUserByUsername,
@@ -77,4 +125,6 @@ export {
   updateCredentialCounter,
   type User,
   type Credential,
+  clearUsers,
+  clearCredentials,
 }
