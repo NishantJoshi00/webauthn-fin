@@ -123,6 +123,7 @@ async function clearUsers(): Promise<void> {
   } catch {
     UserState = [];
   }
+
 }
 
 async function clearCredentials(): Promise<void> {
@@ -131,6 +132,7 @@ async function clearCredentials(): Promise<void> {
   } catch {
     CredentialState = [];
   }
+
 }
 
 export {

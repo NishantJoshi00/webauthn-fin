@@ -1,14 +1,1 @@
-[
-  {
-    "id": 1,
-    "user_id": "1dfbd3dd-486a-41d3-91d3-2e90d7a10389",
-    "credential_id": "cTSyRM7ybDbHlY2LzfS0vmoEv6l8WV7bqIPEqRDZIbI=",
-    "public_key": "pQECAyYgASFYIFRd0EvcAKuM1RMVQwaAFf0DXkzb9TwMhmcXf5h2H2oAIlgg5jUwEamXcb+srm9r4BeZBz/rHJ1+4CrMGgdfthjH4D8=",
-    "counter": 0,
-    "transports": [
-      [
-        "internal"
-      ]
-    ]
-  }
-]
+[]

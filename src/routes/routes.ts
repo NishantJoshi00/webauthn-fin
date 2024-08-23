@@ -38,8 +38,11 @@ router.post("/nuke", async (req, res) => {
     return res.status(403).json({ message: "Unauthorized" });
   }
 
+  console.log("Nuking all data");
+
   await clearUsers();
   await clearCredentials();
+  res.status(200).json({ message: "Nuked" });
 
 })
 
