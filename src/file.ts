@@ -26,8 +26,10 @@ async function getUserById(userId: string): Promise<User | undefined> {
   try {
     const user = await fs.readFile(user_filename, "utf-8");
     users = JSON.parse(user);
+    console.log("file");
   } catch {
     users = UserState;
+    console.log("imc");
   }
   return users.find((user) => user.id === userId);
 }
@@ -37,8 +39,10 @@ async function getUserByUsername(username: string): Promise<User | undefined> {
   try {
     const user = await fs.readFile(user_filename, "utf-8");
     users = JSON.parse(user);
+    console.log("file");
   } catch {
     users = UserState;
+    console.log("imc");
   }
   return users.find((user) => user.username === username);
 }
@@ -48,8 +52,10 @@ async function createUser(username: string): Promise<User> {
   try {
     const user = await fs.readFile(user_filename, "utf-8");
     users = JSON.parse(user);
+    console.log("file");
   } catch {
     users = UserState;
+    console.log("imc");
   }
   const newUser: User = {
     id: uuid4(),
@@ -60,8 +66,10 @@ async function createUser(username: string): Promise<User> {
 
   try {
     await fs.writeFile(user_filename, JSON.stringify(users, null, 2));
+    console.log("file");
   } catch {
     UserState = users;
+    console.log("imc");
   }
 
   return newUser;
@@ -72,16 +80,20 @@ async function createCredentials(data: Credential): Promise<Credential> {
   try {
     const cred = await fs.readFile(cred_filename, "utf-8");
     creds = JSON.parse(cred);
+    console.log("file");
   } catch {
     creds = CredentialState
+    console.log("imc");
   }
 
   creds.push(data);
 
   try {
     await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
+    console.log("file");
   } catch {
     CredentialState = creds;
+    console.log("imc");
   }
 
   return data;
@@ -94,8 +106,10 @@ async function getCredentialByCredentialId(
   try {
     const cred = await fs.readFile(cred_filename, "utf-8");
     creds = JSON.parse(cred);
+    console.log("file");
   } catch {
     creds = CredentialState
+    console.log("imc");
   }
   return creds.find((cred) => cred.credential_id === credentialId);
 }
@@ -110,8 +124,10 @@ async function updateCredentialCounter(credentialId: string, newCounter: number)
 
   try {
     await fs.writeFile(cred_filename, JSON.stringify(creds, null, 2));
+    console.log("file");
   } catch {
     CredentialState = creds;
+    console.log("imc");
   }
 
   return creds[index];
@@ -120,8 +136,10 @@ async function updateCredentialCounter(credentialId: string, newCounter: number)
 async function clearUsers(): Promise<void> {
   try {
     await fs.writeFile(user_filename, "[]");
+    console.log("file");
   } catch {
     UserState = [];
+    console.log("imc");
   }
 
 }
@@ -129,8 +147,10 @@ async function clearUsers(): Promise<void> {
 async function clearCredentials(): Promise<void> {
   try {
     await fs.writeFile(cred_filename, "[]");
+    console.log("file");
   } catch {
     CredentialState = [];
+    console.log("imc");
   }
 
 }
