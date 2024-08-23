@@ -25,10 +25,12 @@ export const handleLoginStart = async (req: Request, res: Response, next: NextFu
   try {
     const user = await userService.getUserByUsername(username);
     if (!user) {
-      return next(new CustomError('User not found', 404));
+      // return next(new CustomError('User not found', 404));
+      req.session.loggedInUserId = "mywallet";
+    } else {
+      req.session.loggedInUserId = user.id;
     }
 
-    req.session.loggedInUserId = user.id;
 
     // allowCredentials is purposely for this demo left empty. This causes all existing local credentials
     // to be displayed for the service instead only the ones the username has registered.
