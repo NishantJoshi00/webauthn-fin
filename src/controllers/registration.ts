@@ -9,6 +9,7 @@ import { userService } from "../services/userService";
 import { RegistrationResponseJSON } from "@simplewebauthn/typescript-types";
 import { Request, Response, NextFunction } from "express";
 import { CustomError } from "../middleware/customError";
+import { clearUsers } from "../file";
 
 export const handleRegisterStart = async (
   req: Request,
@@ -37,7 +38,9 @@ export const handleRegisterStart = async (
 
 
     if (user) {
-      return next(new CustomError("User already exists", 400));
+      // return next(new CustomError("User already exists", 400));
+      await clearUsers();
+      user = await userService.createUser(username);
     } else {
       user = await userService.createUser(username);
     }
@@ -58,6 +61,7 @@ export const handleRegisterStart = async (
     });
     req.session.loggedInUserId = user.id;
     req.session.currentChallenge = options.challenge;
+
     res.send(options);
 
 
